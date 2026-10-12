@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  titulo="Quiénes somos"
+  descripcion="Conoce el tostadero Tueste Norte, nuestra tienda y nuestras catas mensuales."
+>
+  <section class="mx-auto max-w-5xl">
+    <h1 class="text-4xl font-bold text-amber-800">
+      Quiénes somos
+    </h1>
+
+    <p class="mt-4 text-lg leading-relaxed text-stone-700">
+      Tueste Norte nació en un pequeño local con una idea sencilla:
+      compartir nuestra pasión por el buen café. Somos un tostadero
+      de café de especialidad que selecciona granos de Etiopía,
+      Colombia, Brasil y Guatemala y los tuesta en pequeños lotes
+      para destacar los matices de cada origen.
+    </p>
+
+    <p class="mt-4 text-lg leading-relaxed text-stone-700">
+      Nuestra tienda física es un punto de encuentro para quienes
+      quieren descubrir nuevos sabores. Te ayudamos a elegir tu café
+      y organizamos catas mensuales donde compartimos métodos de
+      preparación y aprendemos a reconocer las notas de cada variedad.
+    </p>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold text-stone-900">
+        Nuestros valores
+      </h2>
+
+      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <article class="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
+          <h3 class="text-xl font-semibold text-amber-800">
+            Origen y trazabilidad
+          </h3>
+          <p class="mt-3 text-stone-700">
+            Valoramos la procedencia de cada café, el trabajo de sus
+            productores y las características que lo hacen especial.
+          </p>
+        </article>
+
+        <article class="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
+          <h3 class="text-xl font-semibold text-amber-800">
+            Tueste cuidadoso
+          </h3>
+          <p class="mt-3 text-stone-700">
+            Tostamos en pequeños lotes para cuidar cada detalle y
+            destacar el sabor propio de cada origen.
+          </p>
+        </article>
+
+        <article class="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
+          <h3 class="text-xl font-semibold text-amber-800">
+            Compartir conocimiento
+          </h3>
+          <p class="mt-3 text-stone-700">
+            Organizamos catas mensuales para acercarte al café de
+            especialidad y ayudarte a disfrutarlo también en casa.
+          </p>
+        </article>
+      </div>
+    </section>
+  </section>
+</BaseLayout>
