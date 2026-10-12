@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Badge from "../components/Badge.astro";
+
+/*
+Prueba de validación del ejercicio 3:
+Se eliminó temporalmente el campo titulo de nuevo-cafe.md.
+Al ejecutar npm run build apareció este error:
+
+[InvalidContentEntryDataError] avisos → nuevo-cafe data does not match collection schema.
+titulo**: **titulo: Required
+
+Corrección: se volvió a añadir el campo titulo en nuevo-cafe.md.
+*/
+
+const avisos = await getCollection("avisos");
+
+avisos.sort(
+  (a, b) => b.data.fecha.getTime() - a.data.fecha.getTime()
+);
+---
+
+<BaseLayout
+  titulo="Avisos"
+  descripcion="Novedades y avisos de Tueste Norte."
+>
+  <h1 class="text-4xl font-bold text-amber-800">
+    Avisos
+  </h1>
+
+  <p class="mt-4 text-lg text-stone-700">
+    Novedades del tostadero, la tienda y nuestras catas.
+  </p>
+
+  <div class="mt-8 space-y-6">
+    {avisos.map((aviso) => (
+      <article
+        class={
+          "rounded-xl border p-6 shadow-sm " +
+          (aviso.data.importante
+            ? "border-amber-400 bg-amber-50"
+            : "border-stone-200 bg-white")
+        }
+      >
+        <h2 class="text-2xl font-bold text-stone-900">
+          {aviso.data.titulo}
+        </h2>
+
+        <p class="mt-2 text-sm text-stone-600">
+          <time datetime={aviso.data.fecha.toISOString()}>
+            {aviso.data.fecha.toLocaleDateString("es-ES", {
+              dateStyle: "long",
+            })}
+          </time>
+        </p>
+
+        {aviso.data.importante && (
+          <p class="mt-4">
+            <Badge texto="Importante" tono="tueste" />
+          </p>
+        )}
+      </article>
+    ))}
+  </div>
+</BaseLayout>
