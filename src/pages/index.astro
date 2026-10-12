@@ -1,24 +1,13 @@
 ---
-import "../styles/global.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tueste Norte</title>
-  </head>
+<BaseLayout titulo="Inicio">
+  <h1 class="text-4xl font-bold text-amber-800">
+    Tueste Norte
+  </h1>
 
-  <body class="bg-stone-100 text-stone-900">
-    <main class="mx-auto max-w-4xl px-6 py-12">
-      <h1 class="text-4xl font-bold text-amber-800">
-        Tueste Norte
-      </h1>
-
-      <p class="mt-4 text-lg">
-        Nuestra web con Astro y Tailwind empieza aquí.
-      </p>
-    </main>
-  </body>
-</html>
+  <p class="mt-4 text-lg">
+    Nuestra web con Astro y Tailwind empieza aquí.
+  </p>
+</BaseLayout>
