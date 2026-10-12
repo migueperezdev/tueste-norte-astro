@@ -1,0 +1,31 @@
+---
+import Badge from "../components/Badge.astro";
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pruebas de etiquetas · Tueste Norte</title>
+  </head>
+
+  <body class="bg-stone-100 text-stone-900">
+    <main class="mx-auto max-w-4xl px-6 py-12">
+      <h1 class="text-4xl font-bold text-amber-800">
+        Pruebas de etiquetas
+      </h1>
+
+      <p class="mt-4 text-lg">
+        Tres etiquetas con textos y colores diferentes.
+      </p>
+
+      <p class="mt-6 flex flex-wrap gap-3">
+        <Badge texto="tueste claro" tono="tueste" />
+        <Badge texto="Etiopía" tono="origen" />
+        <Badge texto="¡nuevo!" tono="nuevo" />
+      </p>
+    </main>
+  </body>
+</html>

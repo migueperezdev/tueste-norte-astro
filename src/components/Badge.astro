@@ -1,0 +1,19 @@
+---
+interface Props {
+  texto: string;
+  tono: "tueste" | "origen" | "nuevo";
+}
+
+const { texto, tono } = Astro.props;
+
+const colores = {
+  tueste: "bg-amber-100 text-amber-900",
+  origen: "bg-sky-100 text-sky-900",
+  nuevo: "bg-emerald-100 text-emerald-900",
+};
+
+const clasesBase = "inline-block rounded-full px-3 py-1 text-sm font-semibold";
+const clases = clasesBase + " " + colores[tono];
+---
+
+<span class={clases}>{texto}</span>
