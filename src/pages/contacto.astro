@@ -1,0 +1,90 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Datos ficticios para el proyecto educativo.
+const tienda = {
+  direccion: "Calle del Café, 12, Sevilla",
+  correo: "contacto@example.com",
+  telefono: "000 000 000",
+};
+---
+
+<BaseLayout
+  titulo="Contacto"
+  descripcion="Información de contacto y horarios de Tueste Norte."
+>
+  <h1 class="text-4xl font-bold text-amber-800">
+    Contacto
+  </h1>
+
+  <p class="mt-4 max-w-3xl text-lg leading-relaxed text-stone-700">
+    Nuestra tienda es un lugar para descubrir nuevos cafés y compartir
+    lo que aprendemos en cada taza.
+  </p>
+
+  <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+    <section class="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
+      <h2 class="text-2xl font-bold text-stone-900">
+        Datos de contacto
+      </h2>
+
+      <dl class="mt-5 space-y-5 text-stone-700">
+        <div>
+          <dt class="font-semibold">Dirección</dt>
+          <dd class="mt-1">{tienda.direccion}</dd>
+        </div>
+
+        <div>
+          <dt class="font-semibold">Correo electrónico</dt>
+          <dd class="mt-1">
+            <a
+              href={`mailto:${tienda.correo}`}
+              class="break-all text-amber-800 hover:underline"
+            >
+              {tienda.correo}
+            </a>
+          </dd>
+        </div>
+
+        <div>
+          <dt class="font-semibold">Teléfono</dt>
+          <dd class="mt-1">{tienda.telefono}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
+      <h2 class="text-2xl font-bold text-stone-900">
+        Horario de la tienda
+      </h2>
+
+      <ul class="mt-5 space-y-3 text-stone-700">
+        <li>
+          <strong>Lunes a viernes:</strong> de 9:00 a 19:00.
+        </li>
+        <li>
+          <strong>Sábados:</strong> de 10:00 a 14:00.
+        </li>
+        <li>
+          <strong>Domingos:</strong> cerrado.
+        </li>
+      </ul>
+
+      <p class="mt-6 leading-relaxed text-stone-700">
+        Consulta nuestros avisos para conocer las próximas catas.
+      </p>
+
+      <a
+        href="/avisos"
+        class="mt-4 inline-block font-semibold text-amber-800 hover:underline"
+      >
+        Ver avisos y novedades
+      </a>
+    </section>
+  </div>
+
+  <p class="mt-6 rounded-lg bg-amber-50 p-4 text-sm text-amber-900">
+    Proyecto educativo: la dirección, el horario, el correo y el teléfono
+    son datos ficticios de ejemplo.
+  </p>
+</BaseLayout>
