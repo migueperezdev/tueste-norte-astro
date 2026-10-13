@@ -83,7 +83,7 @@ Después de modificar las páginas o su contenido, vuelve a ejecutar
 - `src/content.config.ts`: configuración y validación de las colecciones.
 - `src/content/avisos/`: avisos escritos en Markdown.
 - `src/content/blog/`: artículos escritos en Markdown.
-- `src/styles/global.css`: importación de Tailwind y configuración de fuentes.
+- `src/styles/global.css`: importación de Tailwind y detección de clases.
 
 ## Decisiones sobre los datos
 
@@ -91,9 +91,21 @@ Los cuatro cafés se guardan en un array tipado dentro de
 `src/pages/catalogo.astro`. Es una solución sencilla para el catálogo
 estático y pequeño de esta entrega.
 
+Los nombres, orígenes, notas de cata, niveles de tueste y precios
+se reutilizan del catálogo de WordPress de las semanas 2 y 3.
+
+Durante `npm run build`, Astro genera las páginas como archivos HTML
+y CSS. En cada visita se sirven esos archivos ya generados, sin
+ejecutar PHP ni consultar WordPress o una base de datos. Esto reduce
+el trabajo por visita y permite aprovechar la caché del alojamiento,
+por lo que resulta adecuado para el aumento de visitas del reportaje.
+
 El blog y los avisos utilizan colecciones de contenido. Sus esquemas
 validan los campos de los archivos Markdown. Los listados se ordenan
 por fecha, empezando por el contenido más reciente.
+
+La página de avisos muestra el título, la fecha y el cuerpo de cada
+archivo Markdown. Los avisos importantes se resaltan visualmente.
 
 Los artículos marcados con `draft: true` se excluyen del listado
 y de la generación de páginas del blog.

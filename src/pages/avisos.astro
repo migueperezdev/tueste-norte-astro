@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Badge from "../components/Badge.astro";
 
@@ -19,6 +19,13 @@ const avisos = await getCollection("avisos");
 avisos.sort(
   (a, b) => b.data.fecha.getTime() - a.data.fecha.getTime()
 );
+
+const avisosConContenido = await Promise.all(
+  avisos.map(async (aviso) => {
+    const { Content } = await render(aviso);
+    return { aviso, Content };
+  })
+);
 ---
 
 <BaseLayout
@@ -34,7 +41,7 @@ avisos.sort(
   </p>
 
   <div class="mt-8 space-y-6">
-    {avisos.map((aviso) => (
+    {avisosConContenido.map(({ aviso, Content }) => (
       <article
         class={
           "rounded-xl border p-6 shadow-sm " +
@@ -51,6 +58,7 @@ avisos.sort(
           <time datetime={aviso.data.fecha.toISOString()}>
             {aviso.data.fecha.toLocaleDateString("es-ES", {
               dateStyle: "long",
+              timeZone: "UTC",
             })}
           </time>
         </p>
@@ -60,6 +68,10 @@ avisos.sort(
             <Badge texto="Importante" tono="tueste" />
           </p>
         )}
+
+        <div class="mt-4 leading-relaxed text-stone-700">
+          <Content />
+        </div>
       </article>
     ))}
   </div>
