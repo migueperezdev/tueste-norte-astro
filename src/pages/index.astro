@@ -1,13 +1,81 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Badge from "../components/Badge.astro";
 ---
 
-<BaseLayout titulo="Inicio">
-  <h1 class="text-4xl font-bold text-amber-800">
-    Tueste Norte
-  </h1>
+<BaseLayout
+  titulo="Inicio"
+  descripcion="Tueste Norte: tostadero de café de especialidad, tienda física y catas mensuales."
+>
+  <section class="rounded-2xl border border-amber-200 bg-amber-50 p-6 md:p-10">
+    <Badge texto="Café de especialidad" tono="tueste" />
 
-  <p class="mt-4 text-lg">
-    Nuestra web con Astro y Tailwind empieza aquí.
-  </p>
+    <h1 class="mt-4 max-w-3xl text-4xl font-bold leading-tight text-stone-900 md:text-5xl">
+      Café de origen, tostado con cuidado.
+    </h1>
+
+    <p class="mt-5 max-w-2xl text-lg leading-relaxed text-stone-700">
+      En Tueste Norte seleccionamos cafés de Etiopía, Colombia,
+      Brasil y Guatemala. Tostamos en pequeños lotes para destacar
+      sus aromas y ayudarte a descubrir nuevos sabores en cada taza.
+    </p>
+
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a
+        href="/catalogo"
+        class="inline-block rounded-lg bg-amber-800 px-5 py-3 font-semibold text-white hover:bg-amber-900"
+      >
+        Ver catálogo
+      </a>
+
+      <a
+        href="#catas"
+        class="inline-block rounded-lg border border-amber-800 px-5 py-3 font-semibold text-amber-800 hover:bg-amber-100"
+      >
+        Descubrir nuestras catas
+      </a>
+    </div>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="text-2xl font-bold text-stone-900">
+      Un tostadero y una tienda para compartir el buen café
+    </h2>
+
+    <p class="mt-4 max-w-3xl text-lg leading-relaxed text-stone-700">
+      Nuestra tienda física es un lugar para preguntar, aprender
+      y elegir tu próximo café. Te acompañamos para encontrar
+      el origen y el tueste que mejor encajen con tus gustos.
+    </p>
+
+    <a
+      href="/quienes-somos"
+      class="mt-4 inline-block font-semibold text-amber-800 hover:underline"
+    >
+      Conoce nuestra historia
+    </a>
+  </section>
+
+  <section
+    id="catas"
+    class="mt-12 rounded-xl border border-stone-200 bg-white p-6 md:p-8"
+  >
+    <h2 class="text-2xl font-bold text-amber-800">
+      Catas mensuales
+    </h2>
+
+    <p class="mt-4 max-w-3xl text-lg leading-relaxed text-stone-700">
+      Descubre aromas, compara distintos orígenes y aprende a
+      reconocer las notas de cada café. Nuestras catas son una
+      oportunidad para disfrutar y compartir lo que encontramos
+      en cada taza.
+    </p>
+
+    <a
+      href="/avisos"
+      class="mt-4 inline-block font-semibold text-amber-800 hover:underline"
+    >
+      Consulta nuestros avisos y novedades
+    </a>
+  </section>
 </BaseLayout>
