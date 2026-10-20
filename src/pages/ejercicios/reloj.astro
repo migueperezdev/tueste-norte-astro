@@ -1,0 +1,28 @@
+---
+export const prerender = true;
+
+const hora = new Date().toLocaleTimeString("es-ES");
+
+// Con output: 'server', sin prerender, la hora se calcula en cada petición.
+// Al recargar, el frontmatter vuelve a ejecutar new Date() y cambia la hora.
+// Con prerender = true, el frontmatter se ejecuta durante el build.
+// Esa hora queda guardada en el HTML generado.
+// Al recargar se sirve ese HTML y la hora permanece fija.
+// Para obtener otra hora hay que volver a ejecutar npm run build.
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Reloj — Tueste Norte</title>
+  </head>
+
+  <body>
+    <main>
+      <h1>Reloj generado por Astro</h1>
+      <p>Hora de generación: <strong>{hora}</strong></p>
+    </main>
+  </body>
+</html>
