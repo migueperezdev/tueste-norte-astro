@@ -1,8 +1,8 @@
 ---
 interface CafeWP {
-  title: {
-    rendered: string;
-  };
+    title: {
+        rendered: string;
+    };
 }
 
 const API = import.meta.env.WP_API_URL;
@@ -10,40 +10,54 @@ const API = import.meta.env.WP_API_URL;
 const respuesta = await fetch(`${API}/wp/v2/cafes?per_page=3`);
 
 if (!respuesta.ok) {
-  throw new Error(
-    `Error al pedir los cafés: HTTP ${respuesta.status}`
-  );
+    throw new Error(`Error al pedir los cafés: HTTP ${respuesta.status}`);
 }
 
 const totalCafes = Number(respuesta.headers.get("X-WP-Total"));
 const totalPaginas = Number(respuesta.headers.get("X-WP-TotalPages"));
 
 const cafes: CafeWP[] = await respuesta.json();
+
+// La primera página ya está guardada en cafes.
+// Recorremos las páginas restantes manteniendo tres cafés por página.
+for (let pagina = 2; pagina <= totalPaginas; pagina++) {
+    const respuestaPagina = await fetch(
+        `${API}/wp/v2/cafes?per_page=3&page=${pagina}`,
+    );
+
+    if (!respuestaPagina.ok) {
+        throw new Error(
+            `Error al pedir la página ${pagina}: HTTP ${respuestaPagina.status}`,
+        );
+    }
+
+    const cafesPagina: CafeWP[] = await respuestaPagina.json();
+
+    cafes.push(...cafesPagina);
+}
 ---
 
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Inventario — Tueste Norte</title>
-  </head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Inventario — Tueste Norte</title>
+    </head>
 
-  <body>
-    <main>
-      <h1>Inventario de cafés</h1>
+    <body>
+        <main>
+            <h1>Inventario de cafés</h1>
 
-      <p>
-        Hay {totalCafes} cafés repartidos en {totalPaginas} páginas.
-      </p>
+            <p>
+                Hay {totalCafes} cafés repartidos en {totalPaginas} páginas.
+            </p>
 
-      <h2>Cafés de la primera página</h2>
+            <h2>Lista completa de cafés</h2>
 
-      <ul>
-        {cafes.map((cafe) => (
-          <li>{cafe.title.rendered}</li>
-        ))}
-      </ul>
-    </main>
-  </body>
+            <ul>
+                {cafes.map((cafe) => <li>{cafe.title.rendered}</li>)}
+            </ul>
+        </main>
+    </body>
 </html>
