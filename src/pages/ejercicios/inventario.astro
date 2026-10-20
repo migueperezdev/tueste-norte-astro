@@ -1,0 +1,49 @@
+---
+interface CafeWP {
+  title: {
+    rendered: string;
+  };
+}
+
+const API = import.meta.env.WP_API_URL;
+
+const respuesta = await fetch(`${API}/wp/v2/cafes?per_page=3`);
+
+if (!respuesta.ok) {
+  throw new Error(
+    `Error al pedir los cafés: HTTP ${respuesta.status}`
+  );
+}
+
+const totalCafes = Number(respuesta.headers.get("X-WP-Total"));
+const totalPaginas = Number(respuesta.headers.get("X-WP-TotalPages"));
+
+const cafes: CafeWP[] = await respuesta.json();
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Inventario — Tueste Norte</title>
+  </head>
+
+  <body>
+    <main>
+      <h1>Inventario de cafés</h1>
+
+      <p>
+        Hay {totalCafes} cafés repartidos en {totalPaginas} páginas.
+      </p>
+
+      <h2>Cafés de la primera página</h2>
+
+      <ul>
+        {cafes.map((cafe) => (
+          <li>{cafe.title.rendered}</li>
+        ))}
+      </ul>
+    </main>
+  </body>
+</html>
