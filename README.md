@@ -65,7 +65,7 @@ Después de modificar las páginas o su contenido, vuelve a ejecutar
 | --- | --- |
 | `/` | Portada y presentación de Tueste Norte. |
 | `/quienes-somos` | Historia y valores del tostadero. |
-| `/catalogo` | Cuatro cafés con origen, notas de cata, tueste y precio. |
+| `/cafes/` | Catálogo de cafés desde WordPress, con origen, notas de cata, tueste y precio. |
 | `/contacto` | Datos de ejemplo y horarios de la tienda. |
 | `/blog` | Listado de tres artículos de preparación de café. |
 | `/blog/v60` | Ejemplo de página individual de un artículo. |
@@ -87,12 +87,13 @@ Después de modificar las páginas o su contenido, vuelve a ejecutar
 
 ## Decisiones sobre los datos
 
-Los cuatro cafés se guardan en un array tipado dentro de
-`src/pages/catalogo.astro`. Es una solución sencilla para el catálogo
-estático y pequeño de esta entrega.
+Los cafés se obtienen desde la API REST de WordPress mediante
+las funciones de `src/lib/wp.ts`. La página
+`src/pages/cafes/index.astro` muestra esos datos utilizando
+el componente `CafeCard.astro`.
 
-Los nombres, orígenes, notas de cata, niveles de tueste y precios
-se reutilizan del catálogo de WordPress de las semanas 2 y 3.
+El catálogo ya no utiliza un array de cafés escrito a mano:
+el contenido se administra desde WordPress.
 
 Durante `npm run build`, Astro genera las páginas como archivos HTML
 y CSS. En cada visita se sirven esos archivos ya generados, sin
