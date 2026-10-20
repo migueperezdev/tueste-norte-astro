@@ -1,0 +1,51 @@
+---
+interface EntradaWP {
+  title: {
+    rendered: string;
+  };
+  date: string;
+}
+
+const API = import.meta.env.WP_API_URL;
+
+const respuesta = await fetch(`${API}/wp/v2/posts`);
+
+if (!respuesta.ok) {
+  throw new Error(
+    `Error al pedir las entradas: HTTP ${respuesta.status}`
+  );
+}
+
+const entradas: EntradaWP[] = await respuesta.json();
+
+// Este log aparece en la terminal donde se ejecuta Astro.
+// El frontmatter se ejecuta fuera del navegador:
+// durante el build en páginas estáticas o en el servidor con SSR.
+// Por eso no aparece en la consola del navegador.
+console.log("Número de entradas recibidas:", entradas.length);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Titulares del blog — Tueste Norte</title>
+  </head>
+
+  <body>
+    <main>
+      <h1>Titulares del blog</h1>
+
+      <ul>
+        {entradas.map((entrada) => (
+          <li>
+            {entrada.title.rendered}
+            {" "}
+            ({new Date(entrada.date).toLocaleDateString("es-ES")})
+          </li>
+        ))}
+      </ul>
+    </main>
+  </body>
+</html>
