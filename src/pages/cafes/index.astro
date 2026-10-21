@@ -10,30 +10,31 @@ const cafes = await getCafes();
   titulo="Cafés"
   descripcion="Descubre los cafés de especialidad de Tueste Norte."
 >
-  <h1 class="text-4xl font-bold text-amber-800">
-    Nuestros cafés
-  </h1>
+  <h1 class="text-4xl font-bold text-amber-800">Nuestros cafés</h1>
 
   <p class="mt-4 text-lg leading-relaxed text-stone-700">
-    Cafés de origen, tostados en pequeños lotes para destacar sus
-    aromas y sabores. Precios por paquete de 250 g.
+    Cafés de origen, tostados en pequeños lotes para destacar sus aromas y
+    sabores. Precios por paquete de 250 g.
   </p>
 
-  {cafes.length === 0 ? (
-    <p class="mt-8 text-stone-700">
-      Todavía no hay cafés publicados.
-    </p>
-  ) : (
-    <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {cafes.map((cafe) => (
-        <CafeCard
-          nombre={cafe.nombre}
-          origen={cafe.origen}
-          notas={cafe.notas}
-          tueste={cafe.tueste}
-          precio={cafe.precio}
-        />
-      ))}
-    </div>
-  )}
+  {
+    cafes.length === 0 ? (
+      <p class="mt-8 text-stone-700">Todavía no hay cafés publicados.</p>
+    ) : (
+      <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {cafes.map((cafe) => (
+          <CafeCard
+            nombre={cafe.nombre}
+            origen={cafe.origen}
+            notas={cafe.notas}
+            tueste={cafe.tueste}
+            precio={cafe.precio}
+            imagen={cafe.imagen}
+            imagenAlt={cafe.imagenAlt}
+            slug={cafe.slug}
+          />
+        ))}
+      </div>
+    )
+  }
 </BaseLayout>
