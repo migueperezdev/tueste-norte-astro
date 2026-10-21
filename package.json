@@ -15,6 +15,7 @@
     "@astrojs/node": "^11.1.9",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.8",
+    "html-entities": "^2.6.0",
     "tailwindcss": "^4.3.3"
   }
 }

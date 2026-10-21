@@ -1,3 +1,4 @@
+import { decode } from "html-entities";
 const API = import.meta.env.WP_API_URL;
 
 export type Tueste = "claro" | "medio" | "oscuro";
@@ -106,4 +107,93 @@ export async function getCafeBySlug(slug: string): Promise<Cafe | null> {
     const cafe = datos[0];
 
     return cafe ? mapCafe(cafe) : null;
+}
+
+// Datos que devuelve WordPress para una entrada del blog.
+interface ArticuloWP {
+    id: number;
+    slug: string;
+    date_gmt: string;
+    title: { rendered: string };
+    excerpt: { rendered: string };
+    content: { rendered: string };
+    _embedded?: {
+        "wp:featuredmedia"?: {
+            source_url: string;
+            alt_text: string;
+        }[];
+        author?: {
+            name: string;
+        }[];
+    };
+}
+
+// Datos que utilizarán nuestras páginas.
+export interface Articulo {
+    id: number;
+    slug: string;
+    titulo: string;
+    resumen: string;
+    contenidoHtml: string;
+    fecha: Date;
+    autor: string;
+    imagen: string | null;
+    imagenAlt: string;
+}
+
+// Adapta una entrada de WordPress al formato de nuestra web.
+function mapArticulo(raw: ArticuloWP): Articulo {
+    const media = raw._embedded?.["wp:featuredmedia"]?.[0];
+    const titulo = decode(raw.title.rendered);
+
+    return {
+        id: raw.id,
+        slug: raw.slug,
+        titulo,
+        resumen: decode(
+            raw.excerpt.rendered.replace(/<[^>]*>/g, "")
+        ).trim(),
+        contenidoHtml: raw.content.rendered,
+        fecha: new Date(`${raw.date_gmt}Z`),
+        autor: raw._embedded?.author?.[0]?.name || "Tueste Norte",
+        imagen: media?.source_url ?? null,
+        imagenAlt: media?.alt_text || titulo,
+    };
+}
+
+// Obtiene todas las entradas, de la más reciente a la más antigua.
+export async function getArticulos(): Promise<Articulo[]> {
+    const ruta =
+        "/wp/v2/posts?_embed&per_page=100&orderby=date&order=desc";
+
+    const respuesta = await pedirWP(ruta);
+    const datos: ArticuloWP[] = await respuesta.json();
+    const totalPaginas = Number(
+        respuesta.headers.get("X-WP-TotalPages")
+    );
+
+    for (let pagina = 2; pagina <= totalPaginas; pagina++) {
+        const respuestaPagina = await pedirWP(
+            `${ruta}&page=${pagina}`
+        );
+
+        const datosPagina: ArticuloWP[] = await respuestaPagina.json();
+        datos.push(...datosPagina);
+    }
+
+    return datos.map(mapArticulo);
+}
+
+// Busca una entrada por su slug.
+export async function getArticuloBySlug(
+    slug: string
+): Promise<Articulo | null> {
+    const respuesta = await pedirWP(
+        `/wp/v2/posts?_embed&slug=${encodeURIComponent(slug)}`
+    );
+
+    const datos: ArticuloWP[] = await respuesta.json();
+    const articulo = datos[0];
+
+    return articulo ? mapArticulo(articulo) : null;
 }
